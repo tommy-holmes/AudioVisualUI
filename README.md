@@ -1,3 +1,3 @@
 # AudioVisualUI
 
-A description of this package.
+A SwiftUI implementation for AVKit. Supports iOS 13+. 
