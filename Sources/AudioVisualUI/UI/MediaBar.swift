@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct MediaBar: View {
     @State var item: Streamable
+    @State private var isPlaying: Bool = false
     
     private var playerItem: AVPlayerItem {
         AVPlayerItem(asset: item.asset)
@@ -13,25 +14,39 @@ public struct MediaBar: View {
                 if item is Video {
                     PlayerView(item: playerItem, autoPlay: false) // Change to `true`
                 } else if item is Audio {
-                    
+                    AsyncImage(
+                        url: URL(string: "https://upload.wikimedia.org/wikipedia/en/b/be/Maroon_5_-_Songs_About_Jane.png")!
+                    ) { image in
+                        image
+                            .resizable()
+                    } placeholder: {
+                        Color.red
+                    }
+                    .frame(width: 96, height: 96, alignment: .leading)
                 }
                 
-                VStack {
+                VStack(alignment: .leading) {
                     Text(item.title)
+                    
+                    Text(item.subtitle ?? "")
+                        .foregroundColor(.secondary)
                 }
+                
+                Spacer()
                 
                 Button {
-                    // Play/pause
+                    
                 } label: {
                     ZStack {
                         Circle()
                             .foregroundColor(.primary)
                         
-                        Image(systemName: "play.fill")
+                        Image(systemName: isPlaying ? "pause" : "play.fill")
                             .foregroundColor(.white)
                     }
                 }
-                .padding(.vertical)
+                .padding()
+                .frame(width: 96, height: 96, alignment: .trailing)
                 .disabled(playerItem.status != .readyToPlay)
             }
             .frame(maxHeight: 80)
@@ -40,8 +55,6 @@ public struct MediaBar: View {
 }
 
 internal struct MediaBar_Previews: PreviewProvider {
-//    static let testImage = await UIImage.load(from: URL(string: "https://upload.wikimedia.org/wikipedia/en/b/be/Maroon_5_-_Songs_About_Jane.png")!)
-    
     static var previews: some View {
         MediaBar(item: Video.sample)
             .previewLayout(.sizeThatFits)

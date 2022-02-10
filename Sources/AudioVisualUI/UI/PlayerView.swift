@@ -1,3 +1,5 @@
+import AVFoundation
+
 struct PlayerView: UIViewControllerRepresentable {
     var item: AVPlayerItem
     var autoPlay: Bool = false
@@ -15,10 +17,10 @@ struct PlayerView: UIViewControllerRepresentable {
         return avc
     }
     
-    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) { }
+    func updateUIViewController(_ playerViewController: AVPlayerViewController, context: Context) { }
 }
 
-extension PlayerView {
+internal extension PlayerView {
     final class Coordinator: NSObject, AVPlayerViewControllerDelegate {
         init(item: AVPlayerItem) {
             self.item = item

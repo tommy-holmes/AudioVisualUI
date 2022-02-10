@@ -1,3 +1,3 @@
 # AudioVisualUI
 
-A SwiftUI wrapper for AVKit. Supports iOS 13+. 
+A SwiftUI implementation for a MediaBar similar to that found in music apps like Apple Music and Spotify. Supports iOS 13+. 
