@@ -4,15 +4,11 @@ public struct MediaBar: View {
     @State var item: Streamable
     @State private var isPlaying: Bool = false
     
-    private var playerItem: AVPlayerItem {
-        AVPlayerItem(asset: item.asset)
-    }
-    
     public var body: some View {
         VStack {
             HStack {
                 if item is Video {
-                    PlayerView(player: AVPlayer(playerItem: playerItem), isPlaying: $isPlaying)
+                    PlayerView(player: item.player, isPlaying: $isPlaying)
                 } else if item is Audio {
                     AsyncImage(
                         url: URL(string: "https://upload.wikimedia.org/wikipedia/en/b/be/Maroon_5_-_Songs_About_Jane.png")!
@@ -23,6 +19,9 @@ public struct MediaBar: View {
                         Color.red
                     }
                     .frame(width: 96, height: 96, alignment: .leading)
+                    .background(
+                        PlayerView(player: item.player, isPlaying: $isPlaying)
+                    )
                 }
                 
                 VStack(alignment: .leading) {
@@ -58,7 +57,7 @@ public struct MediaBar: View {
 
 internal struct MediaBar_Previews: PreviewProvider {
     static var previews: some View {
-        MediaBar(item: Video.sample)
+        MediaBar(item: Audio.sample)
             .previewLayout(.sizeThatFits)
     }
 }
