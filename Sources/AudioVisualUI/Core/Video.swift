@@ -1,9 +1,16 @@
+import AVFoundation
 public struct Video: Streamable {
     public var asset: AVAsset
     public var title: String
     public var subtitle: String?
     public var duration: TimeInterval
     public var resumeTime: TimeInterval = 0
+}
+
+internal extension Video {
+    var player: AVPlayer {
+        .init(playerItem: AVPlayerItem(asset: asset))
+    }
 }
 
 internal extension Video {

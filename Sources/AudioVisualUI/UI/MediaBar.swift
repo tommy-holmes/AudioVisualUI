@@ -12,7 +12,7 @@ public struct MediaBar: View {
         VStack {
             HStack {
                 if item is Video {
-                    PlayerView(item: playerItem, autoPlay: false) // Change to `true`
+                    PlayerView(player: AVPlayer(playerItem: playerItem), isPlaying: $isPlaying)
                 } else if item is Audio {
                     AsyncImage(
                         url: URL(string: "https://upload.wikimedia.org/wikipedia/en/b/be/Maroon_5_-_Songs_About_Jane.png")!
@@ -28,14 +28,16 @@ public struct MediaBar: View {
                 VStack(alignment: .leading) {
                     Text(item.title)
                     
-                    Text(item.subtitle ?? "")
-                        .foregroundColor(.secondary)
+                    if let subtitle = item.subtitle {
+                        Text(subtitle)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 
                 Spacer()
                 
                 Button {
-                    
+                    isPlaying.toggle()
                 } label: {
                     ZStack {
                         Circle()
@@ -47,7 +49,7 @@ public struct MediaBar: View {
                 }
                 .padding()
                 .frame(width: 96, height: 96, alignment: .trailing)
-                .disabled(playerItem.status != .readyToPlay)
+//                .disabled(playerItem.status != .readyToPlay)
             }
             .frame(maxHeight: 80)
         }

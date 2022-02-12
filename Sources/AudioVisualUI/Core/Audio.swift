@@ -10,6 +10,12 @@ public struct Audio: Streamable {
 }
 
 internal extension Audio {
+    var player: AVPlayer {
+        .init(playerItem: AVPlayerItem(asset: asset))
+    }
+}
+
+internal extension Audio {
     static let sample: Self = .init(
         asset: AVAsset(url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!),
         title: "Sample",
